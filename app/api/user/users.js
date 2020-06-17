@@ -25,9 +25,9 @@ router.post('/signup', async (req, res) => {
         if (results.rows.length > 0) {
             return res.status(400).json({ error: true, message: 'Email already exists' })
         } else {
-            pool.query(`INSERT INTO users (name, email, password)
-                VALUES($1, $2, $3)
-                RETURNING id, password`, [name, email, hashedPassword], (err, results) => {
+            pool.query(`INSERT INTO users (name, email, password, createdat)
+                VALUES($1, $2, $3, $4)
+                RETURNING id, password`, [name, email, hashedPassword, new Date], (err, results) => {
                 if (err) {
                     throw err
                 } else {
