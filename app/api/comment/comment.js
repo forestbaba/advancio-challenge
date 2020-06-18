@@ -5,7 +5,7 @@ const { auth, pool } = require('../../utility/worker')
 
 router.get('/', (req, res) => {
 
-    pool.query(`SELECT * FROM comments JOIN users ON comments.userid= users.id 
+    pool.query(`SELECT c.id, c.comment, c.userid, c.updatedat, c.createdat, u.name, u.email FROM comments c JOIN users u ON c.userid= u.id 
 `,
         (err, results) => {
             if (err) {
