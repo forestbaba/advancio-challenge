@@ -19,8 +19,11 @@ router.get('/', (req, res) => {
 })
 router.get('/:commentId', (req, res) => {
 
+    if (isNaN(req.params.commentId)) {
+        return res.status(400).json({error: true, message:'invalid arguement'});
+    }
     pool.query(`SELECT * FROM comment_replies  JOIN users ON comment_replies.userid= users.id where comment_id=$1 
-`, [parseInt(req.params.commentId)],
+`, [req.params.commentId],
         (err, results) => {
             if (err) {
                 throw err;
