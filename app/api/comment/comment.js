@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 router.get('/:commentId', (req, res) => {
 
     pool.query(`SELECT * FROM comment_replies  JOIN users ON comment_replies.userid= users.id where comment_id=$1 
-`, [req.params.commentId],
+`, [parseInt(req.params.commentId)],
         (err, results) => {
             if (err) {
                 throw err;
@@ -131,7 +131,7 @@ router.delete('/:commentId', auth, (req, res) => {
             } else {
                 pool.query(`DELETE FROM comments WHERE id = $1`,
                     [req.params.commentId], (err, results) => {
-                        if (err) { 
+                        if (err) {
                             console.log('ERR: ', err.message)
                             throw err;
                         } else {
